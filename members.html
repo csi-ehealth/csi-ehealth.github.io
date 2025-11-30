@@ -8,39 +8,11 @@
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
   <meta charset="UTF-8">
+  <script type="module" src="js/helpers.js"></script>
   <script type="module">
-    import PocketBase from 'https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/+esm';
+    import { loadCMSData } from './js/helpers.js';
 
-    const pb = new PocketBase('http://127.0.0.1:8090');
-
-    async function loadMembers() {
-      try {
-        const records = await pb.collection('posts').getFullList({
-          filter: 'session = "members"',
-          sort: '-created',
-        });
-
-        const contentDiv = document.getElementById('content');
-        
-        contentDiv.innerHTML = '';
-
-        records.forEach(record => {
-          const memberHTML = `
-            <h1>${record.title || 'Sem título'}</h1>
-            ${record.text}
-          `;
-          console.log("record.text", record.text)
-          console.log("memberHTML" , memberHTML)
-          contentDiv.innerHTML += memberHTML;
-        });
-
-      } catch (error) {
-        console.error('Erro ao carregar membros:', error);
-        document.getElementById('content').innerHTML = '<p>Erro ao carregar os membros. Por favor, tente novamente mais tarde.</p>';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadMembers);
+     document.addEventListener('DOMContentLoaded', () => loadCMSData({type: "members"}));
   </script>
 </head>
 
