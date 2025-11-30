@@ -9,11 +9,7 @@
   <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
   <meta charset="UTF-8">
   <script type="module" src="js/helpers.js"></script>
-  <script type="module">
-    import { loadCMSData } from './js/helpers.js';
 
-     document.addEventListener('DOMContentLoaded', () => loadCMSData({type: "members"}));
-  </script>
 </head>
 
 <body>
@@ -50,5 +46,10 @@
     </div>
   </div>
 <!--<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div>-->
+ <script type="module">
+    import { loadCMSData } from './js/helpers.js';
+
+     document.addEventListener('DOMContentLoaded', () => loadCMSData({type: "members"}));
+  </script>
 </body>
 </html>

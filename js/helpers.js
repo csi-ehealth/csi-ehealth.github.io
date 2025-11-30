@@ -8,7 +8,8 @@ const defaultLoadCMSDataOnHtml = (records) => {
     contentDiv.innerHTML = '';
   
     records.forEach(record => {
-      const memberHTML = `<h1>${record.title || 'Sem título'}</h1> ${record.text}`;
+      const title = record.title ? `<h1>${record.title}</h1>` : undefined;
+      const memberHTML = `${title || ''} <p>${record.text}</p>`;
       contentDiv.innerHTML += memberHTML;
     });
 
