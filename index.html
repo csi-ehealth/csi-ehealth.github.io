@@ -8,6 +8,7 @@
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
   <meta charset="UTF-8">
+  <script type="module" src="js/helpers.js"></script>
 </head>
 
 <body>
@@ -35,32 +36,13 @@
       <div class="sidebar">
         <!-- insert your sidebar items here -->
         <h3>Últimas notícia</h3>
-
-        <h4>Artigo aceito - SBRC</h4>
-        <h5>2024</h5>
-        <p>Artigo aceito no evento 42° Simpósio Brasileiro de Redes de Computadores e Sistemas Distribuídos 2024. O artigo apresenta reconhecimento de Atividade Humana Usando Sinais de Redes Wi-Fi.<br />
-        <p></p>
-
-        <h4>Artigo aceito - ICNC</h4>
-        <h5>2024</h5>
-        <p>Artigo aceito no evento Nuclear cardiology & Cardiac CT. O artigo apresenta ajuste de parâmetros para medição precisa da frequência cardíaca usando sinais Wi-Fi.<br />
-        <p></p>
+        <div id="news_section">
+          <p>Carregando notícias...</p>
+        </div>
         
-        <!--
-        <h4>Artigo aceito - Latincom</h4>
-        <h5>Outubro, 2022</h5>
-        <p>Artigo aceito no evento Latincom 2022. O artigo apresenta uma deteção da presença humana em um sala utilizando dados CSi de redes Wi-Fi.<br /><!--<a href="#">Read more</a></p>
-        <p></p> 
-        -->
-        
-        <!--
-        <h4>Defensa de TCC</h4>
-        <h5>Julho, 2022</h5>
-        <p>TCC defendido pelos graduandos João e Gustavo. TCC intitulado estimação de batimento cariaco usando redes Wi-Fi.<br /><a href="#">Read more</a></p>
-        -->
         <h3>Links Uteis</h3>
         
-        <ul>
+        <ul id="links_section">
           <li><a href="http://csi.midiacom.uff.br:8080/project/" target="_blank">Dashboard</a></li>
           <li><a href="members.html">Membros</a></li>
           <li><a href="papers.html">Trabalhos</a></li>
@@ -95,5 +77,37 @@
     </div>
   </div>
 <!--<div style="text-align: center; font-size: 0.75em;">Dise�o descargado desde <a href="http://www.misplantillas.com/">plantillas web gratis y profesionales</a>.</div>-->
+
+ <script type="module">
+    import { loadCMSData } from './js/helpers.js';
+    
+    const loadNews = (records) => {
+      const contentDiv = document.getElementById('news_section');
+      contentDiv.innerHTML = '';
+      
+      records.forEach(record => {
+        const newsHTML = `
+          <h4> ${record.title}</h4>
+          <h5> ${record.date}</h5>
+          <p> ${record.text}<br />
+          <p></p>`
+            
+        contentDiv.innerHTML += newsHTML;
+      });
+    };
+
+    const loadLinks = (records) => {
+      const linksDiv = document.getElementById('links_section');
+      linksDiv.innerHTML = '';
+      
+      records.forEach(record => {
+        const linkHTML = `<li><a href="${record.url}" target="_blank">${record.text}</a></li>`;
+        linksDiv.innerHTML += linkHTML;
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => loadCMSData({type: "news"}, loadNews));
+    document.addEventListener('DOMContentLoaded', () => loadCMSData({type: "links"}, loadLinks));
+  </script>
 </body>
 </html>
