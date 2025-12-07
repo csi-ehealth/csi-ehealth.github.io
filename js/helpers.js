@@ -1,6 +1,7 @@
 import PocketBase from 'https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/+esm';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase('http://3.138.193.102:8090/');
+//const pb = new PocketBase('http://127.0.0.1:8090');
 
 const defaultLoadCMSDataOnHtml = (records) => {
   const contentDiv = document.getElementById('content');
