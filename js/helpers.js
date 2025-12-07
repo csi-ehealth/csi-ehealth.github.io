@@ -19,13 +19,14 @@ const defaultLoadCMSDataOnHtml = (records) => {
 export async function loadCMSData(pbFilters = {type: "", filter: "", sort: "created"}, loadCMSDataOnHtml = defaultLoadCMSDataOnHtml) {
   try {
     let params = {}
+    const collection = pbFilters.type || ''
 
     if (pbFilters) {
       params = {...pbFilters}
     }
 
-    params.filter = undefined
-    const records = await pb.collection(pbFilters.type).getFullList(params);
+    params.filter = ""
+    const records = await pb.collection(collection).getFullList(params);
 
     loadCMSDataOnHtml(records);
     
