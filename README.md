@@ -33,3 +33,13 @@ make cms/remote/start
 
 ### Conectar no servidor 
 make cms/remote/connect
+
+
+## Urls
+### Remoto
+- CMS: https://ehealth-uff.duckdns.org/_/
+- Site: https://csi-ehealth.github.io/index.html
+
+### Local
+- CMS: http://localhost:8090/_/
+- Site: http://localhost:8000/index.html
