@@ -1,14 +1,17 @@
 .PHONY: serve/cms
 
-serve/cms:
+cms/local/start:
 	./cms/pocketbase serve
 
+cms/remote/connect:
+	cd ./cms && ssh -i "ehealth-server.pem" ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com
 
-cms/connect:
-	cd ./cms && ssh -i "ehealth_ssh.pem" ec2-user@ec2-3-138-193-102.us-east-2.compute.amazonaws.com
+cms/remote/setup:
+	scp -i "cms/ehealth-server.pem" cms/pocketbase ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com:~/
 
-cms/update-data:
-	scp -i "cms/ehealth_ssh.pem" -r cms/pb_migrations ec2-user@ec2-3-138-193-102.us-east-2.compute.amazonaws.com:~/
-	scp -i "cms/ehealth_ssh.pem" -r cms/pb_data ec2-user@ec2-3-138-193-102.us-east-2.compute.amazonaws.com:~/
+cms/remote/update-data:
+	scp -i "cms/ehealth-server.pem" -r cms/pb_migrations ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com:~/
+	scp -i "cms/ehealth-server.pem" -r cms/pb_data ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com:~/
 
-
+cms/remote/start:
+    cd ./cms && ssh -i "ehealth-server.pem" ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com "./pocketbase serve --http='0.0.0.0:8090'"
