@@ -10,7 +10,7 @@ After=network.target
 WorkingDirectory=/home/ubuntu
 
 # Execução do PocketBase
-ExecStart=/home/ubuntu/pocketbase serve --http=127.0.0.1:8090 --hooks
+ExecStart=/home/ubuntu/pocketbase serve --http=127.0.0.1:8090
 
 # Recomendações para serviços web
 Restart=always
