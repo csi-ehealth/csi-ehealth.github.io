@@ -5,7 +5,8 @@
   <title>Contato</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
 </head>
 
@@ -36,15 +37,15 @@
         <!-- insert the page content here -->
         <h1>Contato</h1>
         <p>Por favor preencher o formulario:</p>
-        <form action="#" method="post">
+        <form id="contactForm">
           <div class="form_settings">
-            <p><span>Name</span><input class="contact" type="text" name="your_name" value="" /></p>
-            <p><span>Email Address</span><input class="contact" type="text" name="your_email" value="" /></p>
-            <p><span>Message</span><textarea class="contact textarea" rows="8" cols="50" name="your_enquiry"></textarea></p>
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit" /></p>
+            <p><span>Name</span><input class="contact" type="text" id="name" name="name" required /></p>
+            <p><span>Email Address</span><input class="contact" type="email" id="email" name="email" required /></p>
+            <p><span>Message</span><textarea class="contact textarea" rows="8" cols="50" id="message" name="message" required></textarea></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" value="Enviar" /></p>
           </div>
         </form>
-        <p><br /><br />NOTE: A contact form such as this would require some way of emailing the input to an email address.</p>
+        <p id="formStatus"></p>
       </div>
     </div>
     <div id="content_footer"></div>
@@ -53,5 +54,41 @@
     </div>
   </div>
 <!--<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div>-->
+  <script type="module">
+    import PocketBase from 'https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/+esm';
+
+    const pb = new PocketBase('https://ehealth-uff.duckdns.org/');
+    //const pb = new PocketBase('http://127.0.0.1:8090');
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formStatus = document.getElementById('formStatus');
+      const submitButton = document.querySelector('input[type="submit"]');
+      
+      try {
+        submitButton.disabled = true;
+        formStatus.innerHTML = '<p>Enviando mensagem...</p>';
+        
+        const data = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          message: document.getElementById('message').value,
+          status: 'received'
+        };
+
+        const record = await pb.collection('contact_messages').create(data);
+        
+        formStatus.innerHTML = '<p style="color: green;">Mensagem enviada com sucesso! Entraremos em contato em breve.</p>';
+        document.getElementById('contactForm').reset();
+        
+      } catch (error) {
+        console.error('Erro ao enviar mensagem:', error);
+        formStatus.innerHTML = '<p style="color: red;">Erro ao enviar mensagem. Por favor, tente novamente.</p>';
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
