@@ -1,28 +1,18 @@
 ## Esse é o arquivo de configuração do serviço systemd para o PocketBase
-##cat /etc/systemd/system/pocketbase.service
+## Fica no caminho /etc/systemd/system/pocketbase.service no servidor da uff
 
 [Unit]
 Description=PocketBase Service
 After=network.target
 
 [Service]
-# Caminho para a pasta onde está o binário pocketbase
-WorkingDirectory=/home/ubuntu
-
-# Execução do PocketBase
-ExecStart=/home/ubuntu/pocketbase serve --http=127.0.0.1:8090
-
-# Recomendações para serviços web
+Type=simple
+User=seta
+Group=seta
+WorkingDirectory=/home/seta
+ExecStart=/home/seta/ehealth/cms/pocketbase serve --http='0.0.0.0:8090'
 Restart=always
-RestartSec=3
-
-# Usuário que executará o processo
-User=ubuntu
-Group=ubuntu
-
-# Garantir que logs vão para journalctl
-StandardOutput=journal
-StandardError=journal
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
