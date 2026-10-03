@@ -1,10 +1,22 @@
-.PHONY: serve/cms
+.PHONY: local front/serve cms/local/start cms/local/superuser
+
+# Sobe CMS (8090) e site (8000) juntos. Ctrl+C para os dois
+local:
+	@echo "Site: http://localhost:8000/index.html"
+	@echo "CMS:  http://127.0.0.1:8090/_/"
+	@$(MAKE) --no-print-directory -j2 cms/local/start front/serve
 
 front/serve:
-	python -m http.server 8000
+	python3 -m http.server 8000
 
 cms/local/start:
-	./cms/pocketbase serve
+	./cms/pocketbase serve --http=127.0.0.1:8090
+
+# Cria (ou atualiza) o login do painel do CMS local
+# Uso: make cms/local/superuser EMAIL=voce@email.com PASSWORD=suasenha123
+cms/local/superuser:
+	@test -n "$(EMAIL)" -a -n "$(PASSWORD)" || (echo "Uso: make cms/local/superuser EMAIL=voce@email.com PASSWORD=suasenha123" && exit 1)
+	./cms/pocketbase superuser upsert "$(EMAIL)" "$(PASSWORD)"
 
 cms/remote/connect:
 	cd ./cms && ssh -i "ehealth-server.pem" ubuntu@ec2-13-59-167-175.us-east-2.compute.amazonaws.com

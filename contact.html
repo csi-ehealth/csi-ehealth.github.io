@@ -2,11 +2,10 @@
 <html>
 
 <head>
+  <meta charset="utf-8" />
   <title>Contato</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
-  <meta charset="UTF-8">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
 </head>
 
@@ -55,10 +54,7 @@
   </div>
 <!--<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div>-->
   <script type="module">
-    import PocketBase from 'https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/+esm';
-
-    const pb = new PocketBase('https://ehealth-uff.duckdns.org/');
-    //const pb = new PocketBase('http://127.0.0.1:8090');
+    import { pb } from './js/helpers.js';
 
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.preventDefault();

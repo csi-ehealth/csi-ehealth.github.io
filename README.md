@@ -2,20 +2,25 @@
 
 ## Local
 
-### Iniciar o CMS
+- Precisa só de `make` e `python3` (o PocketBase já está em `cms/pocketbase`)
+- Suba tudo com:
+
 ```
-    make serve/cms
+make local
 ```
 
-Acesse o CMS atraves da url http://127.0.0.1:8090/_/
+- Site: http://localhost:8000/index.html
+- CMS: http://127.0.0.1:8090/_/
+- `Ctrl+C` para os dois
+- Rodando em `localhost`, o site usa o CMS local sozinho. Publicado, usa o de produção
+- Para entrar no painel do CMS, crie um login local:
 
-### Iniciar servidor para prover js
-Rode o comando na raiz do projeto
 ```
-    python -m http.server 8000
+make cms/local/superuser EMAIL=voce@email.com PASSWORD=suasenha123
 ```
 
-Acesse http://localhost:8000/index.html
+- Quer subir só um deles? `make cms/local/start` ou `make front/serve`
+- Cuidado: o CMS local altera `cms/pb_data/`, que está no git. Não commite sem querer, e lembre que `make cms/remote/uff/update-all` envia essa pasta para produção
 
 
 # Subindo para o servidor remoto na uff

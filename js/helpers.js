@@ -1,7 +1,8 @@
 import PocketBase from 'https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/+esm';
 
-const pb = new PocketBase('https://ehealth-uff.duckdns.org/');
-//const pb = new PocketBase('http://127.0.0.1:8090');
+// Rodando local usa o CMS local; senão, o de produção
+const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+export const pb = new PocketBase(isLocal ? 'http://127.0.0.1:8090' : 'https://ehealth-uff.duckdns.org/');
 
 const defaultLoadCMSDataOnHtml = (records) => {
   const contentDiv = document.getElementById('content');
